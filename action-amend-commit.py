@@ -17,8 +17,9 @@ def get_last_commit_author():
 
 def amend_last_commit():
     try:
+        # Only add commits of modified files
         subprocess.run(
-            ["git", "add", "."],
+            ["git", "add", "-A"],
             check=True
         )
         subprocess.run(
@@ -26,7 +27,7 @@ def amend_last_commit():
             check=True
         )
         subprocess.run(
-            ["git", "push", "--force"],
+            ["git", "push", "--force-with-lease"],
             check=True
         )
         print("Last commit amended and pushed successfully.")
