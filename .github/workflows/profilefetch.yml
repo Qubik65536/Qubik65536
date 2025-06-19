@@ -30,7 +30,7 @@ jobs:
       - name: Run profilefetch script
         env:
           GITHUB_USERNAME: ${{ github.repository_owner }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.METRICS_TOKEN }}
         run: python profilefetch.py
 
       - name: Update SVGs in repository
