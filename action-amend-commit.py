@@ -18,7 +18,11 @@ def get_last_commit_author():
 def amend_last_commit():
     try:
         subprocess.run(
-            ["git", "commit", "-a", "--amend", "--no-edit"],
+            ["git", "add", "."],
+            check=True
+        )
+        subprocess.run(
+            ["git", "commit", "--amend", "--no-edit"],
             check=True
         )
         subprocess.run(
@@ -33,7 +37,7 @@ def amend_last_commit():
 def create_new_commit():
     try:
         subprocess.run(
-            ["git", "commit", "-a", "-m", "Update Profile"],
+            ["git", "commit", "-a", "-m", "Update Profile [skip ci]"],
             check=True
         )
         subprocess.run(
