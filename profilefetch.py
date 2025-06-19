@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 GitHub Profile SVG Generator
-Generates neofetch-style profile SVGs with statistics using GitHub GraphQL API
+Generates neofetch-style profile SVGs with statistics fetched from GitHub GraphQL API.
 """
 
 import argparse
