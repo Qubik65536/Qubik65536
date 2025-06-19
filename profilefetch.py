@@ -16,7 +16,7 @@ import requests
 # SVG Configuration Constants
 SVG_WIDTH = 1024
 SVG_HEIGHT = None  # Will be calculated dynamically based on content
-ASCII_HEIGHT = 490  # Height of ASCII art section, modify based on the art added
+ASCII_HEIGHT = 402  # Height of ASCII art section, modify based on the art added
 
 # GitHub language colors (subset - add more as needed)
 LANGUAGE_COLORS = {
@@ -987,28 +987,28 @@ text, tspan {{white-space: pre;}}
         svg_content += f'''
 <text x="{ascii_x}" y="30" fill="{text_color}" class="ascii">
     <tspan x="{ascii_x}" y="50">                  @</tspan>
-    <tspan x="{ascii_x}" y="70">              @@    @@</tspan>
-    <tspan x="{ascii_x}" y="90">           @@@        @@@</tspan>
-    <tspan x="{ascii_x}" y="110">        @-     @@  @@      @</tspan>
-    <tspan x="{ascii_x}" y="130">     @ @#       @@@@       @@ @</tspan>
-    <tspan x="{ascii_x}" y="150">  %      +@@ @@      @@ @@+      @</tspan>
-    <tspan x="{ascii_x}" y="170">*@@      :@@ @@      @@ @@+      @@*</tspan>
-    <tspan x="{ascii_x}" y="190">%<tspan class="green">-</tspan>#@@@%@-       @@@@       .@#@@##<tspan class="red">=</tspan>%</tspan>
-    <tspan x="{ascii_x}" y="210">@<tspan class="green">=**+-</tspan>@@@:    #@@  @@.    -@%@<tspan class="red">*+++=</tspan>%</tspan>
-    <tspan x="{ascii_x}" y="230">@<tspan class="green">*-=+-</tspan>@<tspan class="green">:*</tspan>@@@@@        @@@@##<tspan class="red">-</tspan>@<tspan class="red">=+==+</tspan>@</tspan>
-    <tspan x="{ascii_x}" y="250">@<tspan class="green">-</tspan>@@@<tspan class="green">:</tspan>@<tspan class="green">:**=-</tspan>@<tspan class="green">*</tspan>@@    @@#@<tspan class="red">+=++-</tspan>@<tspan class="red">=</tspan>#@@<tspan class="red">=</tspan>%</tspan>
-    <tspan x="{ascii_x}" y="270">@<tspan class="green">--==</tspan>@@@<tspan class="green">=---</tspan>@<tspan class="green">:+%</tspan>@@@%#<tspan class="red">+-</tspan>@<tspan class="red">+===</tspan>#@@<tspan class="red">+===</tspan>@</tspan>
-    <tspan x="{ascii_x}" y="290">@<tspan class="green">-=**:</tspan>@<tspan class="green">:</tspan>@@@<tspan class="green">-</tspan>@<tspan class="green">:**=</tspan>%%<tspan class="red">=*+=</tspan>@<tspan class="red">+</tspan>@@@<tspan class="red">-</tspan>@<tspan class="red">=+++=</tspan>%</tspan>
-    <tspan x="{ascii_x}" y="310">@@<tspan class="green">%=-:</tspan>@<tspan class="green">:=--*</tspan>@@<tspan class="green">*-:</tspan>##<tspan class="red">-=+</tspan>@@#<tspan class="red">==+-</tspan>@<tspan class="red">-=+#</tspan>@%</tspan>
-    <tspan x="{ascii_x}" y="330">@<tspan class="green">-=</tspan>@@#@<tspan class="green">:=*+=</tspan>@<tspan class="green">:</tspan>#@@@@@@#<tspan class="red">=</tspan>@<tspan class="red">++++-</tspan>@<tspan class="red">*</tspan>@@<tspan class="red">+=</tspan>%</tspan>
-    <tspan x="{ascii_x}" y="350">@<tspan class="green">=+=-:</tspan>@@@<tspan class="green">=-:</tspan>@<tspan class="green">:+-:%</tspan>#<tspan class="red">-=+=</tspan>@<tspan class="red">==+</tspan>@@@<tspan class="red">-==+=</tspan>@</tspan>
-    <tspan x="{ascii_x}" y="370">@<tspan class="green">++**:</tspan>@<tspan class="green">:-</tspan>@@@@<tspan class="green">:-+=</tspan>@@<tspan class="red">=+=-</tspan>@@@@<tspan class="red">=-</tspan>@<tspan class="red">=++-:</tspan>#</tspan>
-    <tspan x="{ascii_x}" y="390"> @@@<tspan class="green">*:</tspan>@<tspan class="green">:+=::</tspan>@@@<tspan class="green">+:</tspan>##<tspan class="red">=+</tspan>@@@<tspan class="red">==++=</tspan>@<tspan class="red">---</tspan>%</tspan>
-    <tspan x="{ascii_x}" y="410">    @@@<tspan class="green">=+==-</tspan>@<tspan class="green">.-</tspan>#@@@@#<tspan class="red">=-</tspan>@<tspan class="red">+++-.</tspan>@%</tspan>
-    <tspan x="{ascii_x}" y="430">        @@<tspan class="green">=-</tspan>@<tspan class="green">:++:*</tspan>#<tspan class="red">-++=</tspan>@<tspan class="red">=:=</tspan>#</tspan>
-    <tspan x="{ascii_x}" y="450">           @@<tspan class="green">-:::%</tspan>@<tspan class="red">==-:</tspan>%%</tspan>
-    <tspan x="{ascii_x}" y="470">              @@<tspan class="green">:+</tspan>*<tspan class="red">:%</tspan>@</tspan>
-    <tspan x="{ascii_x}" y="490">                  *</tspan>
+    <tspan x="{ascii_x}" y="66">              @@    @@</tspan>
+    <tspan x="{ascii_x}" y="82">           @@@        @@@</tspan>
+    <tspan x="{ascii_x}" y="98">        @-     @@  @@      @</tspan>
+    <tspan x="{ascii_x}" y="114">     @ @#       @@@@       @@ @</tspan>
+    <tspan x="{ascii_x}" y="130">  %      +@@ @@      @@ @@+      @</tspan>
+    <tspan x="{ascii_x}" y="146">*@@      :@@ @@      @@ @@+      @@*</tspan>
+    <tspan x="{ascii_x}" y="162">%<tspan class="green">-</tspan>#@@@%@-       @@@@       .@#@@##<tspan class="red">=</tspan>%</tspan>
+    <tspan x="{ascii_x}" y="178">@<tspan class="green">=**+-</tspan>@@@:    #@@  @@.    -@%@<tspan class="red">*+++=</tspan>%</tspan>
+    <tspan x="{ascii_x}" y="194">@<tspan class="green">*-=+-</tspan>@<tspan class="green">:*</tspan>@@@@@        @@@@##<tspan class="red">-</tspan>@<tspan class="red">=+==+</tspan>@</tspan>
+    <tspan x="{ascii_x}" y="210">@<tspan class="green">-</tspan>@@@<tspan class="green">:</tspan>@<tspan class="green">:**=-</tspan>@<tspan class="green">*</tspan>@@    @@#@<tspan class="red">+=++-</tspan>@<tspan class="red">=</tspan>#@@<tspan class="red">=</tspan>%</tspan>
+    <tspan x="{ascii_x}" y="226">@<tspan class="green">--==</tspan>@@@<tspan class="green">=---</tspan>@<tspan class="green">:+%</tspan>@@@%#<tspan class="red">+-</tspan>@<tspan class="red">+===</tspan>#@@<tspan class="red">+===</tspan>@</tspan>
+    <tspan x="{ascii_x}" y="242">@<tspan class="green">-=**:</tspan>@<tspan class="green">:</tspan>@@@<tspan class="green">-</tspan>@<tspan class="green">:**=</tspan>%%<tspan class="red">=*+=</tspan>@<tspan class="red">+</tspan>@@@<tspan class="red">-</tspan>@<tspan class="red">=+++=</tspan>%</tspan>
+    <tspan x="{ascii_x}" y="258">@@<tspan class="green">%=-:</tspan>@<tspan class="green">:=--*</tspan>@@<tspan class="green">*-:</tspan>##<tspan class="red">-=+</tspan>@@#<tspan class="red">==+-</tspan>@<tspan class="red">-=+#</tspan>@%</tspan>
+    <tspan x="{ascii_x}" y="274">@<tspan class="green">-=</tspan>@@#@<tspan class="green">:=*+=</tspan>@<tspan class="green">:</tspan>#@@@@@@#<tspan class="red">=</tspan>@<tspan class="red">++++-</tspan>@<tspan class="red">*</tspan>@@<tspan class="red">+=</tspan>%</tspan>
+    <tspan x="{ascii_x}" y="290">@<tspan class="green">=+=-:</tspan>@@@<tspan class="green">=-:</tspan>@<tspan class="green">:+-:%</tspan>#<tspan class="red">-=+=</tspan>@<tspan class="red">==+</tspan>@@@<tspan class="red">-==+=</tspan>@</tspan>
+    <tspan x="{ascii_x}" y="306">@<tspan class="green">++**:</tspan>@<tspan class="green">:-</tspan>@@@@<tspan class="green">:-+=</tspan>@@<tspan class="red">=+=-</tspan>@@@@<tspan class="red">=-</tspan>@<tspan class="red">=++-:</tspan>#</tspan>
+    <tspan x="{ascii_x}" y="322"> @@@<tspan class="green">*:</tspan>@<tspan class="green">:+=::</tspan>@@@<tspan class="green">+:</tspan>##<tspan class="red">=+</tspan>@@@<tspan class="red">==++=</tspan>@<tspan class="red">---</tspan>%</tspan>
+    <tspan x="{ascii_x}" y="338">    @@@<tspan class="green">=+==-</tspan>@<tspan class="green">.-</tspan>#@@@@#<tspan class="red">=-</tspan>@<tspan class="red">+++-.</tspan>@%</tspan>
+    <tspan x="{ascii_x}" y="354">        @@<tspan class="green">=-</tspan>@<tspan class="green">:++:*</tspan>#<tspan class="red">-++=</tspan>@<tspan class="red">=:=</tspan>#</tspan>
+    <tspan x="{ascii_x}" y="370">           @@<tspan class="green">-:::%</tspan>@<tspan class="red">==-:</tspan>%%</tspan>
+    <tspan x="{ascii_x}" y="386">              @@<tspan class="green">:+</tspan>*<tspan class="red">:%</tspan>@</tspan>
+    <tspan x="{ascii_x}" y="402">                  *</tspan>
 </text>'''
 
         # Main content starts at x=360

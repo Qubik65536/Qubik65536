@@ -28,28 +28,28 @@ text, tspan {white-space: pre;}
 <rect width="1024px" height="759px" fill="#f6f8fa" rx="15"/>
 <text x="25" y="30" fill="#24292f" class="ascii">
     <tspan x="25" y="50">                  @</tspan>
-    <tspan x="25" y="70">              @@    @@</tspan>
-    <tspan x="25" y="90">           @@@        @@@</tspan>
-    <tspan x="25" y="110">        @-     @@  @@      @</tspan>
-    <tspan x="25" y="130">     @ @#       @@@@       @@ @</tspan>
-    <tspan x="25" y="150">  %      +@@ @@      @@ @@+      @</tspan>
-    <tspan x="25" y="170">*@@      :@@ @@      @@ @@+      @@*</tspan>
-    <tspan x="25" y="190">%<tspan class="green">-</tspan>#@@@%@-       @@@@       .@#@@##<tspan class="red">=</tspan>%</tspan>
-    <tspan x="25" y="210">@<tspan class="green">=**+-</tspan>@@@:    #@@  @@.    -@%@<tspan class="red">*+++=</tspan>%</tspan>
-    <tspan x="25" y="230">@<tspan class="green">*-=+-</tspan>@<tspan class="green">:*</tspan>@@@@@        @@@@##<tspan class="red">-</tspan>@<tspan class="red">=+==+</tspan>@</tspan>
-    <tspan x="25" y="250">@<tspan class="green">-</tspan>@@@<tspan class="green">:</tspan>@<tspan class="green">:**=-</tspan>@<tspan class="green">*</tspan>@@    @@#@<tspan class="red">+=++-</tspan>@<tspan class="red">=</tspan>#@@<tspan class="red">=</tspan>%</tspan>
-    <tspan x="25" y="270">@<tspan class="green">--==</tspan>@@@<tspan class="green">=---</tspan>@<tspan class="green">:+%</tspan>@@@%#<tspan class="red">+-</tspan>@<tspan class="red">+===</tspan>#@@<tspan class="red">+===</tspan>@</tspan>
-    <tspan x="25" y="290">@<tspan class="green">-=**:</tspan>@<tspan class="green">:</tspan>@@@<tspan class="green">-</tspan>@<tspan class="green">:**=</tspan>%%<tspan class="red">=*+=</tspan>@<tspan class="red">+</tspan>@@@<tspan class="red">-</tspan>@<tspan class="red">=+++=</tspan>%</tspan>
-    <tspan x="25" y="310">@@<tspan class="green">%=-:</tspan>@<tspan class="green">:=--*</tspan>@@<tspan class="green">*-:</tspan>##<tspan class="red">-=+</tspan>@@#<tspan class="red">==+-</tspan>@<tspan class="red">-=+#</tspan>@%</tspan>
-    <tspan x="25" y="330">@<tspan class="green">-=</tspan>@@#@<tspan class="green">:=*+=</tspan>@<tspan class="green">:</tspan>#@@@@@@#<tspan class="red">=</tspan>@<tspan class="red">++++-</tspan>@<tspan class="red">*</tspan>@@<tspan class="red">+=</tspan>%</tspan>
-    <tspan x="25" y="350">@<tspan class="green">=+=-:</tspan>@@@<tspan class="green">=-:</tspan>@<tspan class="green">:+-:%</tspan>#<tspan class="red">-=+=</tspan>@<tspan class="red">==+</tspan>@@@<tspan class="red">-==+=</tspan>@</tspan>
-    <tspan x="25" y="370">@<tspan class="green">++**:</tspan>@<tspan class="green">:-</tspan>@@@@<tspan class="green">:-+=</tspan>@@<tspan class="red">=+=-</tspan>@@@@<tspan class="red">=-</tspan>@<tspan class="red">=++-:</tspan>#</tspan>
-    <tspan x="25" y="390"> @@@<tspan class="green">*:</tspan>@<tspan class="green">:+=::</tspan>@@@<tspan class="green">+:</tspan>##<tspan class="red">=+</tspan>@@@<tspan class="red">==++=</tspan>@<tspan class="red">---</tspan>%</tspan>
-    <tspan x="25" y="410">    @@@<tspan class="green">=+==-</tspan>@<tspan class="green">.-</tspan>#@@@@#<tspan class="red">=-</tspan>@<tspan class="red">+++-.</tspan>@%</tspan>
-    <tspan x="25" y="430">        @@<tspan class="green">=-</tspan>@<tspan class="green">:++:*</tspan>#<tspan class="red">-++=</tspan>@<tspan class="red">=:=</tspan>#</tspan>
-    <tspan x="25" y="450">           @@<tspan class="green">-:::%</tspan>@<tspan class="red">==-:</tspan>%%</tspan>
-    <tspan x="25" y="470">              @@<tspan class="green">:+</tspan>*<tspan class="red">:%</tspan>@</tspan>
-    <tspan x="25" y="490">                  *</tspan>
+    <tspan x="25" y="66">              @@    @@</tspan>
+    <tspan x="25" y="82">           @@@        @@@</tspan>
+    <tspan x="25" y="98">        @-     @@  @@      @</tspan>
+    <tspan x="25" y="114">     @ @#       @@@@       @@ @</tspan>
+    <tspan x="25" y="130">  %      +@@ @@      @@ @@+      @</tspan>
+    <tspan x="25" y="146">*@@      :@@ @@      @@ @@+      @@*</tspan>
+    <tspan x="25" y="162">%<tspan class="green">-</tspan>#@@@%@-       @@@@       .@#@@##<tspan class="red">=</tspan>%</tspan>
+    <tspan x="25" y="178">@<tspan class="green">=**+-</tspan>@@@:    #@@  @@.    -@%@<tspan class="red">*+++=</tspan>%</tspan>
+    <tspan x="25" y="194">@<tspan class="green">*-=+-</tspan>@<tspan class="green">:*</tspan>@@@@@        @@@@##<tspan class="red">-</tspan>@<tspan class="red">=+==+</tspan>@</tspan>
+    <tspan x="25" y="210">@<tspan class="green">-</tspan>@@@<tspan class="green">:</tspan>@<tspan class="green">:**=-</tspan>@<tspan class="green">*</tspan>@@    @@#@<tspan class="red">+=++-</tspan>@<tspan class="red">=</tspan>#@@<tspan class="red">=</tspan>%</tspan>
+    <tspan x="25" y="226">@<tspan class="green">--==</tspan>@@@<tspan class="green">=---</tspan>@<tspan class="green">:+%</tspan>@@@%#<tspan class="red">+-</tspan>@<tspan class="red">+===</tspan>#@@<tspan class="red">+===</tspan>@</tspan>
+    <tspan x="25" y="242">@<tspan class="green">-=**:</tspan>@<tspan class="green">:</tspan>@@@<tspan class="green">-</tspan>@<tspan class="green">:**=</tspan>%%<tspan class="red">=*+=</tspan>@<tspan class="red">+</tspan>@@@<tspan class="red">-</tspan>@<tspan class="red">=+++=</tspan>%</tspan>
+    <tspan x="25" y="258">@@<tspan class="green">%=-:</tspan>@<tspan class="green">:=--*</tspan>@@<tspan class="green">*-:</tspan>##<tspan class="red">-=+</tspan>@@#<tspan class="red">==+-</tspan>@<tspan class="red">-=+#</tspan>@%</tspan>
+    <tspan x="25" y="274">@<tspan class="green">-=</tspan>@@#@<tspan class="green">:=*+=</tspan>@<tspan class="green">:</tspan>#@@@@@@#<tspan class="red">=</tspan>@<tspan class="red">++++-</tspan>@<tspan class="red">*</tspan>@@<tspan class="red">+=</tspan>%</tspan>
+    <tspan x="25" y="290">@<tspan class="green">=+=-:</tspan>@@@<tspan class="green">=-:</tspan>@<tspan class="green">:+-:%</tspan>#<tspan class="red">-=+=</tspan>@<tspan class="red">==+</tspan>@@@<tspan class="red">-==+=</tspan>@</tspan>
+    <tspan x="25" y="306">@<tspan class="green">++**:</tspan>@<tspan class="green">:-</tspan>@@@@<tspan class="green">:-+=</tspan>@@<tspan class="red">=+=-</tspan>@@@@<tspan class="red">=-</tspan>@<tspan class="red">=++-:</tspan>#</tspan>
+    <tspan x="25" y="322"> @@@<tspan class="green">*:</tspan>@<tspan class="green">:+=::</tspan>@@@<tspan class="green">+:</tspan>##<tspan class="red">=+</tspan>@@@<tspan class="red">==++=</tspan>@<tspan class="red">---</tspan>%</tspan>
+    <tspan x="25" y="338">    @@@<tspan class="green">=+==-</tspan>@<tspan class="green">.-</tspan>#@@@@#<tspan class="red">=-</tspan>@<tspan class="red">+++-.</tspan>@%</tspan>
+    <tspan x="25" y="354">        @@<tspan class="green">=-</tspan>@<tspan class="green">:++:*</tspan>#<tspan class="red">-++=</tspan>@<tspan class="red">=:=</tspan>#</tspan>
+    <tspan x="25" y="370">           @@<tspan class="green">-:::%</tspan>@<tspan class="red">==-:</tspan>%%</tspan>
+    <tspan x="25" y="386">              @@<tspan class="green">:+</tspan>*<tspan class="red">:%</tspan>@</tspan>
+    <tspan x="25" y="402">                  *</tspan>
 </text>
 <text x="360" y="35" fill="#24292f" font-size="14px">
 <tspan x="360" y="35">Qian Qian "Cubik" -—- @Cubik65536 -—————————————————————————————————————-—-</tspan>
@@ -103,22 +103,22 @@ text, tspan {white-space: pre;}
 <tspan x="360" y="384">. <tspan class="key">Repository</tspan>:......... <tspan class="value">144 (<tspan class="key">Contributed</tspan>: 49)</tspan> | <tspan class="value"><tspan class="key">Stars</tspan>: 1446</tspan> | <tspan class="value"><tspan class="key">Followers</tspan>: 157</tspan></tspan>
 </text>
 <text x="360" y="402" fill="#24292f" font-size="14px">
-<tspan x="360" y="402">. <tspan class="key">Commits</tspan>:.......... <tspan class="value">3,926</tspan> | <tspan class="value"><tspan class="key">Lines</tspan>: 5,296,005 ( <tspan class="addColor">7,943,940++</tspan>,  <tspan class="delColor">2,647,935--</tspan> )</tspan></tspan>
+<tspan x="360" y="402">. <tspan class="key">Commits</tspan>:.......... <tspan class="value">3,938</tspan> | <tspan class="value"><tspan class="key">Lines</tspan>: 5,296,065 ( <tspan class="addColor">7,944,030++</tspan>,  <tspan class="delColor">2,647,965--</tspan> )</tspan></tspan>
 </text>
 <text x="360" y="420" fill="#24292f" font-size="14px">
 <tspan x="360" y="420">. <tspan class="key">Issues</tspan>:........................................... <tspan class="value"><tspan class="key">Open</tspan>: <tspan class="green">54</tspan></tspan> | <tspan class="value"><tspan class="key">Closed</tspan>: <tspan class="red">156</tspan></tspan></tspan>
 </text>
 <text x="360" y="438" fill="#24292f" font-size="14px">
 <tspan x="360" y="438">. <tspan class="key">Pull Requests</tspan>:............. <tspan class="value"><tspan class="key">Open</tspan>: <tspan class="green">1</tspan></tspan> | <tspan class="value"><tspan class="key">Draft</tspan>: <tspan class="gray">1</tspan></tspan> | <tspan class="value"><tspan class="key">Merged</tspan>: <tspan class="purple">328</tspan></tspan> | <tspan class="value"><tspan class="key">Closed</tspan>: <tspan class="red">20</tspan></tspan></tspan>
-</text><g transform="translate(360, 456)">  <rect x="0" y="0" width="145.0" height="10" fill="#A97BFF" rx="1"/>  <rect x="145.01917625479408" y="0" width="77.8" height="10" fill="#3572A5" rx="1"/>  <rect x="222.80473570118392" y="0" width="73.3" height="10" fill="#b07219" rx="1"/>  <rect x="296.1080540270135" y="0" width="51.5" height="10" fill="#89e051" rx="1"/>  <rect x="347.56044689011173" y="0" width="32.0" height="10" fill="#3178c6" rx="1"/>  <rect x="379.5897948974487" y="0" width="30.9" height="10" fill="#dea584" rx="1"/>  <rect x="410.4985826246456" y="0" width="24.6" height="10" fill="#e34c26" rx="1"/>  <rect x="435.05752876438214" y="0" width="22.1" height="10" fill="#f34b7d" rx="1"/>  <rect x="457.18859429714854" y="0" width="21.2" height="10" fill="#F05138" rx="1"/>  <rect x="478.38585959646485" y="0" width="17.4" height="10" fill="#41b883" rx="1"/>  <rect x="495.75454393863595" y="0" width="12.0" height="10" fill="#663399" rx="1"/>  <rect x="507.80056695014173" y="0" width="10.1" height="10" fill="#f1e05a" rx="1"/>  <rect x="517.8856094714024" y="0" width="8.9" height="10" fill="#ff6347" rx="1"/>  <rect x="526.7567116891779" y="0" width="8.9" height="10" fill="#a91e50" rx="1"/>  <rect x="535.6278139069534" y="0" width="7.1" height="10" fill="#c6538c" rx="1"/>  <rect x="542.7246956811739" y="0" width="3.0" height="10" fill="#000080" rx="1"/>  <rect x="545.7128564282141" y="0" width="2.6" height="10" fill="#c22d40" rx="1"/>  <rect x="548.3274970818743" y="0" width="2.5" height="10" fill="#178600" rx="1"/>  <rect x="550.8487577121895" y="0" width="2.1" height="10" fill="#4298b8" rx="1"/>  <rect x="552.9031182257796" y="0" width="1.8" height="10" fill="#fcb32c" rx="1"/>  <rect x="554.6773386693347" y="0" width="1.6" height="10" fill="#438eff" rx="1"/></g>
+</text><g transform="translate(360, 456)">  <rect x="0" y="0" width="144.4" height="10" fill="#A97BFF" rx="1"/>  <rect x="144.44112273708689" y="0" width="79.7" height="10" fill="#3572A5" rx="1"/>  <rect x="224.14881248961967" y="0" width="73.0" height="10" fill="#b07219" rx="1"/>  <rect x="297.1599402092676" y="0" width="51.2" height="10" fill="#89e051" rx="1"/>  <rect x="348.40724132203957" y="0" width="31.9" height="10" fill="#3178c6" rx="1"/>  <rect x="380.3089187842551" y="0" width="30.8" height="10" fill="#dea584" rx="1"/>  <rect x="411.0945025743232" y="0" width="24.5" height="10" fill="#e34c26" rx="1"/>  <rect x="435.55555555555554" y="0" width="22.0" height="10" fill="#f34b7d" rx="1"/>  <rect x="457.59840558046835" y="0" width="21.1" height="10" fill="#F05138" rx="1"/>  <rect x="478.71117754525824" y="0" width="17.3" height="10" fill="#41b883" rx="1"/>  <rect x="496.01062946354426" y="0" width="12.0" height="10" fill="#663399" rx="1"/>  <rect x="508.0086364391297" y="0" width="10.0" height="10" fill="#f1e05a" rx="1"/>  <rect x="518.053479488457" y="0" width="8.8" height="10" fill="#ff6347" rx="1"/>  <rect x="526.8892210596246" y="0" width="8.8" height="10" fill="#a91e50" rx="1"/>  <rect x="535.7249626307921" y="0" width="7.1" height="10" fill="#c6538c" rx="1"/>  <rect x="542.7935558877261" y="0" width="3.0" height="10" fill="#000080" rx="1"/>  <rect x="545.7698056801195" y="0" width="2.6" height="10" fill="#c22d40" rx="1"/>  <rect x="548.3740242484636" y="0" width="2.5" height="10" fill="#178600" rx="1"/>  <rect x="550.8852350107954" y="0" width="2.0" height="10" fill="#4298b8" rx="1"/>  <rect x="552.9314067430658" y="0" width="1.8" height="10" fill="#fcb32c" rx="1"/>  <rect x="554.6985550572994" y="0" width="1.6" height="10" fill="#438eff" rx="1"/></g>
 <text x="360" y="491" fill="#24292f" font-size="14px">
-<tspan x="360" y="491">  <tspan style="fill:#A97BFF">●</tspan> <tspan class="key">Kotlin</tspan>: <tspan class="value">25.9%</tspan> <tspan class="value">1,553 commits</tspan> <tspan class="value">(+418,812 -139,600)</tspan></tspan>
+<tspan x="360" y="491">  <tspan style="fill:#A97BFF">●</tspan> <tspan class="key">Kotlin</tspan>: <tspan class="value">25.8%</tspan> <tspan class="value">1,553 commits</tspan> <tspan class="value">(+418,812 -139,600)</tspan></tspan>
 </text>
 <text x="360" y="509" fill="#24292f" font-size="14px">
-<tspan x="360" y="509">  <tspan style="fill:#3572A5">●</tspan> <tspan class="key">Python</tspan>: <tspan class="value">13.9%</tspan> <tspan class="value">833 commits</tspan> <tspan class="value">(+109,076 -36,355)</tspan></tspan>
+<tspan x="360" y="509">  <tspan style="fill:#3572A5">●</tspan> <tspan class="key">Python</tspan>: <tspan class="value">14.2%</tspan> <tspan class="value">857 commits</tspan> <tspan class="value">(+109,166 -36,385)</tspan></tspan>
 </text>
 <text x="360" y="527" fill="#24292f" font-size="14px">
-<tspan x="360" y="527">  <tspan style="fill:#b07219">●</tspan> <tspan class="key">Java</tspan>: <tspan class="value">13.1%</tspan> <tspan class="value">785 commits</tspan> <tspan class="value">(+979,558 -326,515)</tspan></tspan>
+<tspan x="360" y="527">  <tspan style="fill:#b07219">●</tspan> <tspan class="key">Java</tspan>: <tspan class="value">13.0%</tspan> <tspan class="value">785 commits</tspan> <tspan class="value">(+979,558 -326,515)</tspan></tspan>
 </text>
 <text x="360" y="545" fill="#24292f" font-size="14px">
 <tspan x="360" y="545">  <tspan style="fill:#89e051">●</tspan> <tspan class="key">Shell</tspan>: <tspan class="value">9.2%</tspan> <tspan class="value">551 commits</tspan> <tspan class="value">(+21,385 -7,127)</tspan></tspan>
@@ -133,7 +133,7 @@ text, tspan {white-space: pre;}
 <tspan x="360" y="599">  <tspan style="fill:#e34c26">●</tspan> <tspan class="key">HTML</tspan>: <tspan class="value">4.4%</tspan> <tspan class="value">263 commits</tspan> <tspan class="value">(+138,395 -46,126)</tspan></tspan>
 </text>
 <text x="360" y="617" fill="#24292f" font-size="14px">
-<tspan x="360" y="617">  <tspan style="fill:#f34b7d">●</tspan> <tspan class="key">C++</tspan>: <tspan class="value">4.0%</tspan> <tspan class="value">237 commits</tspan> <tspan class="value">(+795,841 -265,276)</tspan></tspan>
+<tspan x="360" y="617">  <tspan style="fill:#f34b7d">●</tspan> <tspan class="key">C++</tspan>: <tspan class="value">3.9%</tspan> <tspan class="value">237 commits</tspan> <tspan class="value">(+795,841 -265,276)</tspan></tspan>
 </text>
 <text x="360" y="635" fill="#24292f" font-size="14px">
 <tspan x="360" y="635">  <tspan style="fill:#F05138">●</tspan> <tspan class="key">Swift</tspan>: <tspan class="value">3.8%</tspan> <tspan class="value">227 commits</tspan> <tspan class="value">(+879,815 -293,271)</tspan></tspan>
@@ -142,7 +142,7 @@ text, tspan {white-space: pre;}
 <tspan x="360" y="653">  <tspan style="fill:#41b883">●</tspan> <tspan class="key">Vue</tspan>: <tspan class="value">3.1%</tspan> <tspan class="value">186 commits</tspan> <tspan class="value">(+211,467 -70,489)</tspan></tspan>
 </text>
 <text x="25" y="691" fill="#24292f" class="note">
-<tspan x="25" y="691" class="note">Generated on 2025-06-19 19:19:14 UTC</tspan>
+<tspan x="25" y="691" class="note">Generated on 2025-06-19 19:46:07 UTC</tspan>
 </text>
 <text x="25" y="706" fill="#24292f" class="note">
 <tspan x="25" y="706" class="note">These metrics include private contributions.</tspan>
