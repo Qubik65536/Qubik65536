@@ -13,7 +13,14 @@
 
 <hr/>
 
-*Refresh Coming Up*
+<div align="center">
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Cubik65536/Cubik65536/main/profile_dark.svg">
+<img alt="Andrew Grant's GitHub Profile README" src="https://raw.githubusercontent.com/Cubik65536/Cubik65536/main/profile_light.svg">
+</picture>
+</div>
+
+<hr/>
 
 ## 🎉 Thanks
 
