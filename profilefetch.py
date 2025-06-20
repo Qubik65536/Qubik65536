@@ -149,11 +149,11 @@ def get_profile_content_definition(user_data):
 
     # Contact info
     content_lines.extend([
-        ("Email.Contact", "me@cubik65536.top"),
-        ("Email.Alternative", "cubik65536@cubik65536.top"),
-        ("Email.Alternative", "cubik65536@proton.me"),
+        ("Email.Contact", "me@qubik.top"),
+        ("Email.Alternative", "qubik65536@qubik65536.top"),
+        ("Email.Alternative", "qubik65536.pm@proton.me"),
         ("LinkedIn", "in/qianq"),
-        ("Discord", "Cubik65536"),
+        ("Discord", "Qubik65536"),
     ])
 
     # Add gap and GitHub Statistics section header
