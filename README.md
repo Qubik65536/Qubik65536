@@ -1,7 +1,7 @@
-## Hi there, I'm Cubik 👋
+## Hi there, I'm Qubik65536 👋
 
 > [!CAUTION]
-> I am gradually phasing out the @Cubik65536 ID and changing to @Qubik65536. On GitHub, I hold both handles.
+> I am gradually retiring the @Cubik65536 ID and changing to @Qubik65536. On GitHub (and some other platforms), I still hold both handles.
 
 <a href="https://www.cubik65536.top"><img src="https://img.shields.io/website?ddown_message=Offline&label=cubik65536.top&style=for-the-badge&up_message=Online&url=https%3A%2F%2Fwww.cubik65536.top" width="auto" height="32"></a>
 
