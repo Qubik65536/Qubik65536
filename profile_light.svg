@@ -55,10 +55,10 @@ text, tspan {white-space: pre;}
 <tspan x="360" y="35">Qian Qian "Qubik" -—- @Qubik65536 -—————————————————————————————————————-—-</tspan>
 </text>
 <text x="360" y="60" fill="#24292f" font-size="14px">
-<tspan x="360" y="60">. <tspan class="key">Bio</tspan>:............. <tspan class="value">Developer, Tech Enthusiast. Founder @iXORTech @FOSScope</tspan></tspan>
+<tspan x="360" y="60">. <tspan class="key">Bio</tspan>:....................... <tspan class="value">Developer, Tech Enthusiast. Founder @iXORTech</tspan></tspan>
 </text>
 <text x="360" y="78" fill="#24292f" font-size="14px">
-<tspan x="360" y="78">. <tspan class="key">Uptime</tspan>:....................................... <tspan class="value">4 years, 8 months, 26 days</tspan></tspan>
+<tspan x="360" y="78">. <tspan class="key">Uptime</tspan>:........................................ <tspan class="value">4 years, 9 months, 4 days</tspan></tspan>
 </text>
 <text x="360" y="96" fill="#24292f" font-size="14px">
 <tspan x="360" y="96">. <tspan class="key">OS</tspan>:................................ <tspan class="value">macOS 26 Tahoe, Windows 11, Fedora 42</tspan></tspan>
@@ -100,49 +100,49 @@ text, tspan {white-space: pre;}
 <tspan x="360" y="366"><tspan class="separator">— GitHub Statistics ———————————————————————————————————————————————————————</tspan></tspan>
 </text>
 <text x="360" y="384" fill="#24292f" font-size="14px">
-<tspan x="360" y="384">. <tspan class="key">Repository</tspan>:......... <tspan class="value">105 (<tspan class="key">Contributed</tspan>: 47)</tspan> | <tspan class="value"><tspan class="key">Stars</tspan>: 1447</tspan> | <tspan class="value"><tspan class="key">Followers</tspan>: 158</tspan></tspan>
+<tspan x="360" y="384">. <tspan class="key">Repository</tspan>:......... <tspan class="value">102 (<tspan class="key">Contributed</tspan>: 45)</tspan> | <tspan class="value"><tspan class="key">Stars</tspan>: 1447</tspan> | <tspan class="value"><tspan class="key">Followers</tspan>: 158</tspan></tspan>
 </text>
 <text x="360" y="402" fill="#24292f" font-size="14px">
-<tspan x="360" y="402">. <tspan class="key">Commits</tspan>:.......... <tspan class="value">3,825</tspan> | <tspan class="value"><tspan class="key">Lines</tspan>: 5,785,336 ( <tspan class="addColor">8,677,938++</tspan>,  <tspan class="delColor">2,892,602--</tspan> )</tspan></tspan>
+<tspan x="360" y="402">. <tspan class="key">Commits</tspan>:.......... <tspan class="value">3,739</tspan> | <tspan class="value"><tspan class="key">Lines</tspan>: 5,754,500 ( <tspan class="addColor">8,631,685++</tspan>,  <tspan class="delColor">2,877,185--</tspan> )</tspan></tspan>
 </text>
 <text x="360" y="420" fill="#24292f" font-size="14px">
-<tspan x="360" y="420">. <tspan class="key">Issues</tspan>:........................................... <tspan class="value"><tspan class="key">Open</tspan>: <tspan class="green">37</tspan></tspan> | <tspan class="value"><tspan class="key">Closed</tspan>: <tspan class="red">174</tspan></tspan></tspan>
+<tspan x="360" y="420">. <tspan class="key">Issues</tspan>:........................................... <tspan class="value"><tspan class="key">Open</tspan>: <tspan class="green">43</tspan></tspan> | <tspan class="value"><tspan class="key">Closed</tspan>: <tspan class="red">175</tspan></tspan></tspan>
 </text>
 <text x="360" y="438" fill="#24292f" font-size="14px">
-<tspan x="360" y="438">. <tspan class="key">Pull Requests</tspan>:............. <tspan class="value"><tspan class="key">Open</tspan>: <tspan class="green">1</tspan></tspan> | <tspan class="value"><tspan class="key">Draft</tspan>: <tspan class="gray">1</tspan></tspan> | <tspan class="value"><tspan class="key">Merged</tspan>: <tspan class="purple">330</tspan></tspan> | <tspan class="value"><tspan class="key">Closed</tspan>: <tspan class="red">20</tspan></tspan></tspan>
-</text><g transform="translate(360, 456)">  <rect x="0" y="0" width="146.3" height="10" fill="#A97BFF" rx="1"/>  <rect x="146.25750500333558" y="0" width="71.7" height="10" fill="#b07219" rx="1"/>  <rect x="217.98532354903273" y="0" width="65.8" height="10" fill="#3572A5" rx="1"/>  <rect x="283.82921947965315" y="0" width="51.5" height="10" fill="#89e051" rx="1"/>  <rect x="335.29019346230825" y="0" width="34.6" height="10" fill="#3178c6" rx="1"/>  <rect x="369.8465643762509" y="0" width="32.2" height="10" fill="#41b883" rx="1"/>  <rect x="402.0680453635758" y="0" width="30.1" height="10" fill="#dea584" rx="1"/>  <rect x="432.1414276184123" y="0" width="24.2" height="10" fill="#e34c26" rx="1"/>  <rect x="456.33088725817214" y="0" width="21.9" height="10" fill="#f34b7d" rx="1"/>  <rect x="478.27885256837897" y="0" width="21.2" height="10" fill="#F05138" rx="1"/>  <rect x="499.4796531020681" y="0" width="10.2" height="10" fill="#663399" rx="1"/>  <rect x="509.65977318212146" y="0" width="8.9" height="10" fill="#ff6347" rx="1"/>  <rect x="518.5323549032689" y="0" width="8.9" height="10" fill="#a91e50" rx="1"/>  <rect x="527.4049366244163" y="0" width="8.2" height="10" fill="#f1e05a" rx="1"/>  <rect x="535.6237491661108" y="0" width="7.3" height="10" fill="#c6538c" rx="1"/>  <rect x="542.9086057371582" y="0" width="3.0" height="10" fill="#000080" rx="1"/>  <rect x="545.8972648432289" y="0" width="2.6" height="10" fill="#178600" rx="1"/>  <rect x="548.5123415610408" y="0" width="2.6" height="10" fill="#c22d40" rx="1"/>  <rect x="551.1274182788527" y="0" width="2.1" height="10" fill="#4298b8" rx="1"/>  <rect x="553.1821214142764" y="0" width="1.8" height="10" fill="#fcb32c" rx="1"/>  <rect x="554.9566377585058" y="0" width="1.6" height="10" fill="#438eff" rx="1"/></g>
+<tspan x="360" y="438">. <tspan class="key">Pull Requests</tspan>:............. <tspan class="value"><tspan class="key">Open</tspan>: <tspan class="green">1</tspan></tspan> | <tspan class="value"><tspan class="key">Draft</tspan>: <tspan class="gray">1</tspan></tspan> | <tspan class="value"><tspan class="key">Merged</tspan>: <tspan class="purple">332</tspan></tspan> | <tspan class="value"><tspan class="key">Closed</tspan>: <tspan class="red">20</tspan></tspan></tspan>
+</text><g transform="translate(360, 456)">  <rect x="0" y="0" width="148.9" height="10" fill="#A97BFF" rx="1"/>  <rect x="148.94021739130434" y="0" width="69.4" height="10" fill="#3572A5" rx="1"/>  <rect x="218.3695652173913" y="0" width="64.5" height="10" fill="#b07219" rx="1"/>  <rect x="282.85326086956525" y="0" width="52.6" height="10" fill="#89e051" rx="1"/>  <rect x="335.44836956521743" y="0" width="35.2" height="10" fill="#3178c6" rx="1"/>  <rect x="370.63858695652175" y="0" width="33.5" height="10" fill="#41b883" rx="1"/>  <rect x="404.116847826087" y="0" width="30.7" height="10" fill="#dea584" rx="1"/>  <rect x="434.8369565217392" y="0" width="24.8" height="10" fill="#e34c26" rx="1"/>  <rect x="459.66032608695656" y="0" width="21.6" height="10" fill="#F05138" rx="1"/>  <rect x="481.25000000000006" y="0" width="15.8" height="10" fill="#f34b7d" rx="1"/>  <rect x="497.03804347826093" y="0" width="10.4" height="10" fill="#663399" rx="1"/>  <rect x="507.40489130434787" y="0" width="9.0" height="10" fill="#ff6347" rx="1"/>  <rect x="516.4402173913044" y="0" width="9.0" height="10" fill="#a91e50" rx="1"/>  <rect x="525.4755434782609" y="0" width="8.5" height="10" fill="#f1e05a" rx="1"/>  <rect x="533.9402173913044" y="0" width="7.4" height="10" fill="#c6538c" rx="1"/>  <rect x="541.358695652174" y="0" width="3.0" height="10" fill="#000080" rx="1"/>  <rect x="544.4021739130436" y="0" width="2.7" height="10" fill="#178600" rx="1"/>  <rect x="547.0652173913045" y="0" width="2.7" height="10" fill="#c22d40" rx="1"/>  <rect x="549.7282608695654" y="0" width="2.1" height="10" fill="#4298b8" rx="1"/>  <rect x="551.8206521739132" y="0" width="1.8" height="10" fill="#fcb32c" rx="1"/>  <rect x="553.6277173913045" y="0" width="1.6" height="10" fill="#438eff" rx="1"/>  <rect x="555.2445652173915" y="0" width="1.6" height="10" fill="#239dad" rx="1"/>  <rect x="556.8614130434785" y="0" width="1.0" height="10" fill="#C1F12E" rx="1"/></g>
 <text x="360" y="491" fill="#24292f" font-size="14px">
-<tspan x="360" y="491">  <tspan style="fill:#A97BFF">●</tspan> <tspan class="key">Kotlin</tspan>: <tspan class="value">26.1%</tspan> <tspan class="value">1,566 commits</tspan> <tspan class="value">(+231,549 -77,179)</tspan></tspan>
+<tspan x="360" y="491">  <tspan style="fill:#A97BFF">●</tspan> <tspan class="key">Kotlin</tspan>: <tspan class="value">26.6%</tspan> <tspan class="value">1,566 commits</tspan> <tspan class="value">(+231,549 -77,179)</tspan></tspan>
 </text>
 <text x="360" y="509" fill="#24292f" font-size="14px">
-<tspan x="360" y="509">  <tspan style="fill:#b07219">●</tspan> <tspan class="key">Java</tspan>: <tspan class="value">12.8%</tspan> <tspan class="value">768 commits</tspan> <tspan class="value">(+438,738 -146,241)</tspan></tspan>
+<tspan x="360" y="509">  <tspan style="fill:#3572A5">●</tspan> <tspan class="key">Python</tspan>: <tspan class="value">12.4%</tspan> <tspan class="value">730 commits</tspan> <tspan class="value">(+85,860 -28,617)</tspan></tspan>
 </text>
 <text x="360" y="527" fill="#24292f" font-size="14px">
-<tspan x="360" y="527">  <tspan style="fill:#3572A5">●</tspan> <tspan class="key">Python</tspan>: <tspan class="value">11.8%</tspan> <tspan class="value">705 commits</tspan> <tspan class="value">(+95,599 -31,864)</tspan></tspan>
+<tspan x="360" y="527">  <tspan style="fill:#b07219">●</tspan> <tspan class="key">Java</tspan>: <tspan class="value">11.5%</tspan> <tspan class="value">678 commits</tspan> <tspan class="value">(+397,277 -132,422)</tspan></tspan>
 </text>
 <text x="360" y="545" fill="#24292f" font-size="14px">
-<tspan x="360" y="545">  <tspan style="fill:#89e051">●</tspan> <tspan class="key">Shell</tspan>: <tspan class="value">9.2%</tspan> <tspan class="value">551 commits</tspan> <tspan class="value">(+21,331 -7,109)</tspan></tspan>
+<tspan x="360" y="545">  <tspan style="fill:#89e051">●</tspan> <tspan class="key">Shell</tspan>: <tspan class="value">9.4%</tspan> <tspan class="value">553 commits</tspan> <tspan class="value">(+21,331 -7,109)</tspan></tspan>
 </text>
 <text x="360" y="563" fill="#24292f" font-size="14px">
-<tspan x="360" y="563">  <tspan style="fill:#3178c6">●</tspan> <tspan class="key">TypeScript</tspan>: <tspan class="value">6.2%</tspan> <tspan class="value">370 commits</tspan> <tspan class="value">(+434,599 -144,865)</tspan></tspan>
+<tspan x="360" y="563">  <tspan style="fill:#3178c6">●</tspan> <tspan class="key">TypeScript</tspan>: <tspan class="value">6.3%</tspan> <tspan class="value">370 commits</tspan> <tspan class="value">(+434,886 -144,960)</tspan></tspan>
 </text>
 <text x="360" y="581" fill="#24292f" font-size="14px">
-<tspan x="360" y="581">  <tspan style="fill:#41b883">●</tspan> <tspan class="key">Vue</tspan>: <tspan class="value">5.8%</tspan> <tspan class="value">345 commits</tspan> <tspan class="value">(+349,261 -116,420)</tspan></tspan>
+<tspan x="360" y="581">  <tspan style="fill:#41b883">●</tspan> <tspan class="key">Vue</tspan>: <tspan class="value">6.0%</tspan> <tspan class="value">352 commits</tspan> <tspan class="value">(+349,261 -116,420)</tspan></tspan>
 </text>
 <text x="360" y="599" fill="#24292f" font-size="14px">
-<tspan x="360" y="599">  <tspan style="fill:#dea584">●</tspan> <tspan class="key">Rust</tspan>: <tspan class="value">5.4%</tspan> <tspan class="value">322 commits</tspan> <tspan class="value">(+44,309 -14,768)</tspan></tspan>
+<tspan x="360" y="599">  <tspan style="fill:#dea584">●</tspan> <tspan class="key">Rust</tspan>: <tspan class="value">5.5%</tspan> <tspan class="value">323 commits</tspan> <tspan class="value">(+44,309 -14,768)</tspan></tspan>
 </text>
 <text x="360" y="617" fill="#24292f" font-size="14px">
-<tspan x="360" y="617">  <tspan style="fill:#e34c26">●</tspan> <tspan class="key">HTML</tspan>: <tspan class="value">4.3%</tspan> <tspan class="value">259 commits</tspan> <tspan class="value">(+127,585 -42,523)</tspan></tspan>
+<tspan x="360" y="617">  <tspan style="fill:#e34c26">●</tspan> <tspan class="key">HTML</tspan>: <tspan class="value">4.4%</tspan> <tspan class="value">261 commits</tspan> <tspan class="value">(+135,478 -45,154)</tspan></tspan>
 </text>
 <text x="360" y="635" fill="#24292f" font-size="14px">
-<tspan x="360" y="635">  <tspan style="fill:#f34b7d">●</tspan> <tspan class="key">C++</tspan>: <tspan class="value">3.9%</tspan> <tspan class="value">235 commits</tspan> <tspan class="value">(+795,841 -265,276)</tspan></tspan>
+<tspan x="360" y="635">  <tspan style="fill:#F05138">●</tspan> <tspan class="key">Swift</tspan>: <tspan class="value">3.9%</tspan> <tspan class="value">227 commits</tspan> <tspan class="value">(+892,947 -297,648)</tspan></tspan>
 </text>
 <text x="360" y="653" fill="#24292f" font-size="14px">
-<tspan x="360" y="653">  <tspan style="fill:#F05138">●</tspan> <tspan class="key">Swift</tspan>: <tspan class="value">3.8%</tspan> <tspan class="value">227 commits</tspan> <tspan class="value">(+880,954 -293,651)</tspan></tspan>
+<tspan x="360" y="653">  <tspan style="fill:#f34b7d">●</tspan> <tspan class="key">C++</tspan>: <tspan class="value">2.8%</tspan> <tspan class="value">166 commits</tspan> <tspan class="value">(+781,013 -260,335)</tspan></tspan>
 </text>
 <text x="25" y="691" fill="#24292f" class="note">
-<tspan x="25" y="691" class="note">Generated on 2025-07-06 21:09:22 UTC</tspan>
+<tspan x="25" y="691" class="note">Generated on 2025-07-14 16:14:14 UTC</tspan>
 </text>
 <text x="25" y="706" fill="#24292f" class="note">
 <tspan x="25" y="706" class="note">These metrics include private contributions.</tspan>
