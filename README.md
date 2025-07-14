@@ -20,7 +20,7 @@
 <div align="center">
 <picture>
 <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Qubik65536/Qubik65536/main/profile_dark.svg">
-<img alt="Andrew Grant's GitHub Profile README" src="https://raw.githubusercontent.com/Qubik65536/Qubik65536/main/profile_light.svg">
+<img alt="Qubik's GitHub Profile README" src="https://raw.githubusercontent.com/Qubik65536/Qubik65536/main/profile_light.svg">
 </picture>
 </div>
 
@@ -39,7 +39,7 @@ Thanks to [@JohnsonRan](https://github.com/JohnsonRan) for providing me network 
 You can also sponsor me on [`GitHub`](https://github.com/sponsors/Qubik65536) or [`Buy Me a Coffee`](https://coff.ee/qubik65536) so that your name will be also on the list!
 
 <p>
-  <a href="https://github.com/sponsors/Qubik65536"><img src="https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA" width="auto" height="40" /></a>
+  <a href="https://github.com/sponsors/Qubik65536"><img src="https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA" height="40" /></a>
   &nbsp;
-  <a href="https://coff.ee/qubik65536"><img src="https://img.buymeacoffee.com/button-api/?text=Buy Me a Coffee&emoji=☕&slug=qubik65536&button_colour=56728b&font_colour=ffffff&font_family=Cookie&outline_colour=ffffff&coffee_colour=FFDD00" height="40" /></a>
+  <a href="https://coff.ee/qubik65536"><img src="https://img.buymeacoffee.com/button-api/?text=Buy%20Me%20a%20Coffee&emoji=%E2%98%95&slug=qubik65536&button_colour=56728b&font_colour=ffffff&font_family=Cookie&outline_colour=ffffff&coffee_colour=FFDD00" height="40" /></a>
 </p>
