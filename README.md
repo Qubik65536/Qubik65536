@@ -4,7 +4,8 @@
 > I am gradually retiring the @Cubik65536 ID and changing to @Qubik65536. On GitHub (and some other platforms), I still hold both handles.
 > Also note that the email address to contact me is also changing. Refer to the contact section below for more details. The addresses under `@cubik65536.top` domain will be kept for a while, but I recommend using the new one.
 
-<a href="https://www.cubik65536.top"><img src="https://img.shields.io/website?ddown_message=Offline&label=cubik65536.top&style=for-the-badge&up_message=Online&url=https%3A%2F%2Fwww.cubik65536.top" width="auto" height="32"></a>
+<a href="https://www.qubik65536.top"><img src="https://img.shields.io/website?ddown_message=Offline&label=qubik65536.top&style=for-the-badge&up_message=Online&url=https%3A%2F%2Fwww.qubik65536.top" width="auto" height="32"></a>
+<img src="https://img.shields.io/website?ddown_message=Offline&label=qubik.top&style=for-the-badge&up_message=Online&url=https%3A%2F%2Fqubik.top" width="auto" height="32">
 
 <p>
   <a href="https://ixor.dev">
@@ -39,7 +40,7 @@ Thanks to [@JohnsonRan](https://github.com/JohnsonRan) for providing me network 
 You can also sponsor me on [`GitHub`](https://github.com/sponsors/Qubik65536) or [`Buy Me a Coffee`](https://coff.ee/qubik65536) so that your name will be also on the list!
 
 <p>
-  <a href="https://github.com/sponsors/Qubik65536"><img src="https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA" height="40" /></a>
+  <a href="https://github.com/sponsors/Qubik65536"><img src="https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA" height="35" /></a>
   &nbsp;
-  <a href="https://coff.ee/qubik65536"><img src="https://img.buymeacoffee.com/button-api/?text=Buy%20Me%20a%20Coffee&emoji=%E2%98%95&slug=qubik65536&button_colour=56728b&font_colour=ffffff&font_family=Cookie&outline_colour=ffffff&coffee_colour=FFDD00" height="40" /></a>
+  <a href="https://coff.ee/qubik65536"><img src="https://img.buymeacoffee.com/button-api/?text=Buy%20Me%20a%20Coffee&emoji=%E2%98%95&slug=qubik65536&button_colour=56728b&font_colour=ffffff&font_family=Cookie&outline_colour=ffffff&coffee_colour=FFDD00" height="35" /></a>
 </p>
