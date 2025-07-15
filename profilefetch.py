@@ -446,7 +446,8 @@ def calculate_language_percentages(language_stats):
                 'additions': stats['additions'],
                 'deletions': stats['deletions'],
                 'net': stats['additions'] - stats['deletions'],
-                'color': stats['color']
+                'color': stats['color'],
+                'repos': stats.get('repos', {})
             }
 
     # Sort by percentage
@@ -619,7 +620,8 @@ class GitHubProfileGenerator:
             'commits': 0,
             'additions': 0,
             'deletions': 0,
-            'color': '#000000'
+            'color': '#000000',
+            'repos': {}  # Track commits per repo for each language
         })
 
         # Fetch data year by year to avoid API limits
@@ -723,15 +725,10 @@ class GitHubProfileGenerator:
                 if commit_count == 0:
                     continue
 
-                # Get primary language
-                primary_lang = repo.get('primaryLanguage')
-                if primary_lang and primary_lang.get('name'):
-                    lang_name = primary_lang['name']
-                    lang_color = primary_lang.get('color') or LANGUAGE_COLORS.get(lang_name, '#000000')
-                    language_stats[lang_name]['commits'] += commit_count
-                    language_stats[lang_name]['color'] = lang_color
+                repo_name = f"{repo.get('owner', {}).get('login', '')}/{repo.get('name', '')}"
 
                 # Process all languages in repo (weighted by usage)
+                # FIX: Don't process primary language separately to avoid double-counting
                 languages = repo.get('languages', {})
                 if languages and languages.get('edges'):
                     total_size = sum(edge.get('size', 0) for edge in languages['edges'] if edge and edge.get('size'))
@@ -756,6 +753,41 @@ class GitHubProfileGenerator:
                                 # Estimate additions/deletions (rough approximation)
                                 language_stats[lang_name]['additions'] += int(edge_size * 0.3)
                                 language_stats[lang_name]['deletions'] += int(edge_size * 0.1)
+
+                                # Track commits per repo for this language
+                                if repo_name not in language_stats[lang_name]['repos']:
+                                    language_stats[lang_name]['repos'][repo_name] = 0
+                                language_stats[lang_name]['repos'][repo_name] += weighted_commits
+                    else:
+                        # If no language data available, use primary language as fallback
+                        primary_lang = repo.get('primaryLanguage')
+                        if primary_lang and primary_lang.get('name'):
+                            lang_name = primary_lang['name']
+                            lang_color = primary_lang.get('color') or LANGUAGE_COLORS.get(lang_name, '#000000')
+                            language_stats[lang_name]['commits'] += commit_count
+                            language_stats[lang_name]['color'] = lang_color
+
+                            # Track commits per repo for this language
+                            if repo_name not in language_stats[lang_name]['repos']:
+                                language_stats[lang_name]['repos'][repo_name] = 0
+                            language_stats[lang_name]['repos'][repo_name] += commit_count
+                else:
+                    # If no languages data at all, fall back to primary language
+                    primary_lang = repo.get('primaryLanguage')
+                    if primary_lang and primary_lang.get('name'):
+                        lang_name = primary_lang['name']
+                        lang_color = primary_lang.get('color') or LANGUAGE_COLORS.get(lang_name, '#000000')
+                        language_stats[lang_name]['commits'] += commit_count
+                        language_stats[lang_name]['color'] = lang_color
+
+                        # Track commits per repo for this language
+                        if repo_name not in language_stats[lang_name]['repos']:
+                            language_stats[lang_name]['repos'][repo_name] = 0
+                        language_stats[lang_name]['repos'][repo_name] += commit_count
+
+        # No need to find just the top repo - we'll keep all repos
+        # Instead of finding the top repo and then removing the repos dict,
+        # we'll just keep the repos dict intact
 
         print(f"✓ Total commits collected: {total_commits}")
         print(f"✓ Languages found: {len(language_stats)}")
@@ -1205,6 +1237,12 @@ def main():
             print(f"\nTop languages:")
             for i, (lang, stats) in enumerate(list(language_stats.items())[:10]):
                 print(f"  {i + 1}. {lang}: {stats['percentage']:.1f}% ({stats['commits']:,} commits)")
+                # List all repositories for this language
+                if stats.get('repos'):
+                    # Sort repos by commit count in descending order
+                    sorted_repos = sorted(stats['repos'].items(), key=lambda x: x[1], reverse=True)
+                    for repo, commits in sorted_repos:
+                        print(f"      - {repo}: {commits:,} commits")
         else:
             print("\nNo language statistics found.")
 
