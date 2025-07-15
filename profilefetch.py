@@ -446,8 +446,7 @@ def calculate_language_percentages(language_stats):
                 'additions': stats['additions'],
                 'deletions': stats['deletions'],
                 'net': stats['additions'] - stats['deletions'],
-                'color': stats['color'],
-                'repos': stats.get('repos', {})
+                'color': stats['color']
             }
 
     # Sort by percentage
@@ -620,8 +619,7 @@ class GitHubProfileGenerator:
             'commits': 0,
             'additions': 0,
             'deletions': 0,
-            'color': '#000000',
-            'repos': {}  # Track commits per repo for each language
+            'color': '#000000'
         })
 
         # Fetch data year by year to avoid API limits
@@ -632,7 +630,7 @@ class GitHubProfileGenerator:
 
             print(f"Fetching contributions for {year}...")
 
-            # Fixed query with proper pagination
+            # Modified query to fetch commit line changes
             contributions_query = """
             query($username: String!, $from: DateTime!, $to: DateTime!) {
                 user(login: $username) {
@@ -657,12 +655,18 @@ class GitHubProfileGenerator:
                                         }
                                     }
                                 }
+                                defaultBranchRef {
+                                    name
+                                }
                             }
                             contributions(first: 100) {
                                 totalCount
                                 nodes {
                                     commitCount
                                     occurredAt
+                                    repository {
+                                        name
+                                    }
                                 }
                             }
                         }
@@ -708,7 +712,7 @@ class GitHubProfileGenerator:
             total_commits += year_commits
             print(f"  ✓ {year}: {year_commits} commits")
 
-            # Process language statistics
+            # Process language statistics and fetch commit changes
             commit_contribs = year_data.get('commitContributionsByRepository', [])
             if not commit_contribs:
                 print(f"  No repository contributions found for {year}")
@@ -719,19 +723,78 @@ class GitHubProfileGenerator:
                     continue
 
                 repo = repo_contrib['repository']
+                repo_name = repo.get('name', '')
+                repo_owner = repo.get('owner', {}).get('login', '')
+                default_branch = repo.get('defaultBranchRef', {}).get('name', 'main')  # Fallback to 'main'
+
                 contributions = repo_contrib.get('contributions', {})
                 commit_count = contributions.get('totalCount', 0) if contributions else 0
 
                 if commit_count == 0:
                     continue
 
-                repo_name = f"{repo.get('owner', {}).get('login', '')}/{repo.get('name', '')}"
+                # Get primary language
+                primary_lang = repo.get('primaryLanguage')
+                if primary_lang and primary_lang.get('name'):
+                    lang_name = primary_lang['name']
+                    lang_color = primary_lang.get('color') or LANGUAGE_COLORS.get(lang_name, '#000000')
+                    language_stats[lang_name]['commits'] += commit_count
+                    language_stats[lang_name]['color'] = lang_color
 
-                # Process all languages in repo (weighted by usage)
-                # FIX: Don't process primary language separately to avoid double-counting
+                # Process all languages in repo
                 languages = repo.get('languages', {})
                 if languages and languages.get('edges'):
                     total_size = sum(edge.get('size', 0) for edge in languages['edges'] if edge and edge.get('size'))
+
+                    # Fetch commit changes for this repository
+                    additions = 0
+                    deletions = 0
+
+                    # Since GitHub GraphQL API doesn't directly provide line changes,
+                    # we'll use a REST API approach to get them
+                    if repo_owner and repo_name:
+                        # REST API call to get commits by the user in this repo for the year
+                        rest_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/commits"
+                        params = {
+                            'author': self.username,
+                            'since': year_start,
+                            'until': year_end,
+                            'per_page': 100
+                        }
+
+                        try:
+                            # First get list of commits
+                            commits_response = requests.get(
+                                rest_url,
+                                params=params,
+                                headers=self.headers
+                            )
+
+                            if commits_response.status_code == 200:
+                                commits = commits_response.json()
+
+                                # Process each commit to get stats
+                                for commit in commits:
+                                    sha = commit.get('sha')
+                                    if sha:
+                                        # Get detailed commit info including stats
+                                        commit_detail_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/commits/{sha}"
+                                        commit_response = requests.get(
+                                            commit_detail_url,
+                                            headers=self.headers
+                                        )
+
+                                        if commit_response.status_code == 200:
+                                            commit_data = commit_response.json()
+                                            stats = commit_data.get('stats', {})
+                                            additions += stats.get('additions', 0)
+                                            deletions += stats.get('deletions', 0)
+
+                            print(f"  Repo {repo_owner}/{repo_name}: +{additions} -{deletions}")
+                        except Exception as e:
+                            print(f"  Error fetching commit stats for {repo_owner}/{repo_name}: {str(e)}")
+
+                    # Distribute additions/deletions by language proportion
                     if total_size > 0:
                         for edge in languages['edges']:
                             if not edge or not edge.get('node'):
@@ -750,52 +813,32 @@ class GitHubProfileGenerator:
                             if weighted_commits > 0:
                                 language_stats[lang_name]['commits'] += weighted_commits
                                 language_stats[lang_name]['color'] = lang_color
-                                # Estimate additions/deletions (rough approximation)
-                                language_stats[lang_name]['additions'] += int(edge_size * 0.3)
-                                language_stats[lang_name]['deletions'] += int(edge_size * 0.1)
 
-                                # Track commits per repo for this language
-                                if repo_name not in language_stats[lang_name]['repos']:
-                                    language_stats[lang_name]['repos'][repo_name] = 0
-                                language_stats[lang_name]['repos'][repo_name] += weighted_commits
-                    else:
-                        # If no language data available, use primary language as fallback
-                        primary_lang = repo.get('primaryLanguage')
-                        if primary_lang and primary_lang.get('name'):
-                            lang_name = primary_lang['name']
-                            lang_color = primary_lang.get('color') or LANGUAGE_COLORS.get(lang_name, '#000000')
-                            language_stats[lang_name]['commits'] += commit_count
-                            language_stats[lang_name]['color'] = lang_color
+                                # Use actual additions/deletions when available
+                                if additions > 0 or deletions > 0:
+                                    language_stats[lang_name]['additions'] += int(additions * lang_proportion)
+                                    language_stats[lang_name]['deletions'] += int(deletions * lang_proportion)
+                                else:
+                                    # Fallback to size-based estimation if we couldn't get stats
+                                    language_stats[lang_name]['additions'] += int(
+                                        edge_size * 0.6)  # More realistic ratio
+                                    language_stats[lang_name]['deletions'] += int(edge_size * 0.2)
 
-                            # Track commits per repo for this language
-                            if repo_name not in language_stats[lang_name]['repos']:
-                                language_stats[lang_name]['repos'][repo_name] = 0
-                            language_stats[lang_name]['repos'][repo_name] += commit_count
-                else:
-                    # If no languages data at all, fall back to primary language
-                    primary_lang = repo.get('primaryLanguage')
-                    if primary_lang and primary_lang.get('name'):
-                        lang_name = primary_lang['name']
-                        lang_color = primary_lang.get('color') or LANGUAGE_COLORS.get(lang_name, '#000000')
-                        language_stats[lang_name]['commits'] += commit_count
-                        language_stats[lang_name]['color'] = lang_color
-
-                        # Track commits per repo for this language
-                        if repo_name not in language_stats[lang_name]['repos']:
-                            language_stats[lang_name]['repos'][repo_name] = 0
-                        language_stats[lang_name]['repos'][repo_name] += commit_count
-
-        # No need to find just the top repo - we'll keep all repos
-        # Instead of finding the top repo and then removing the repos dict,
-        # we'll just keep the repos dict intact
+        # Calculate total additions and deletions
+        total_additions = sum(lang['additions'] for lang in language_stats.values())
+        total_deletions = sum(lang['deletions'] for lang in language_stats.values())
 
         print(f"✓ Total commits collected: {total_commits}")
         print(f"✓ Languages found: {len(language_stats)}")
         print(f"✓ Draft PRs found: {draft_prs}")
+        print(f"✓ Total additions: {total_additions:,}")
+        print(f"✓ Total deletions: {total_deletions:,}")
 
         return {
             'user': user_data,
             'total_commits': total_commits,
+            'total_additions': total_additions,
+            'total_deletions': total_deletions,
             'language_stats': dict(language_stats),
             'contributions_data': contributions_data
         }
@@ -898,9 +941,9 @@ class GitHubProfileGenerator:
         user = data['user']
         language_percentages = calculate_language_percentages(data['language_stats'])
 
-        # Calculate total lines of code
-        total_additions = sum(lang['additions'] for lang in data['language_stats'].values())
-        total_deletions = sum(lang['deletions'] for lang in data['language_stats'].values())
+        # Get total line changes from the data
+        total_additions = data.get('total_additions', 0)
+        total_deletions = data.get('total_deletions', 0)
         net_lines = total_additions - total_deletions
 
         # Color schemes
@@ -1082,7 +1125,7 @@ text, tspan {{white-space: pre;}}
             "Repository": lambda
                 value: f'<tspan class="value">{repos_owned} (<tspan class="key">Contributed</tspan>: {repos_contributed})</tspan> | <tspan class="value"><tspan class="key">Stars</tspan>: {stars}</tspan> | <tspan class="value"><tspan class="key">Followers</tspan>: {followers}</tspan>',
             "Commits": lambda
-                value: f'<tspan class="value">{data["total_commits"]:,}</tspan> | <tspan class="value"><tspan class="key">Lines</tspan>: {net_lines:,} ( <tspan class="addColor">{total_additions:,}++</tspan>,  <tspan class="delColor">{total_deletions:,}--</tspan> )</tspan>',
+                value: f'<tspan class="value">{data["total_commits"]:,}</tspan> | <tspan class="value"><tspan class="key">Lines</tspan>: {net_lines:,} ( <tspan class="addColor">{total_additions:,}++</tspan> / <tspan class="delColor">{total_deletions:,}--</tspan> )</tspan>',
             "Issues": lambda
                 value: f'<tspan class="value"><tspan class="key">Open</tspan>: <tspan class="green">{open_issues}</tspan></tspan> | <tspan class="value"><tspan class="key">Closed</tspan>: <tspan class="red">{closed_issues}</tspan></tspan>',
             "Pull Requests": lambda
@@ -1129,10 +1172,11 @@ text, tspan {{white-space: pre;}}
 
             y_current += 35  # Spacing after language bar before language details
 
-            # Language details
+            # Language details - now include line change statistics
             for i, (lang, stats) in enumerate(list(language_percentages.items())[:10]):  # Show top 10 languages
                 percentage_str = f"{stats['percentage']:.1f}%"
                 commits_str = f"{stats['commits']:,} commits"
+                # Include actual line changes for this language
                 lines_str = f"(+{stats['additions']:,} -{stats['deletions']:,})"
 
                 svg_content += f'''
