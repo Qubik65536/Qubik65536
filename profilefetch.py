@@ -898,11 +898,6 @@ class GitHubProfileGenerator:
         user = data['user']
         language_percentages = calculate_language_percentages(data['language_stats'])
 
-        # Calculate total lines of code
-        total_additions = sum(lang['additions'] for lang in data['language_stats'].values())
-        total_deletions = sum(lang['deletions'] for lang in data['language_stats'].values())
-        net_lines = total_additions - total_deletions
-
         # Color schemes
         if mode == 'dark':
             bg_color = '#0d1117'  # Changed back to original GitHub dark theme color
@@ -1082,7 +1077,7 @@ text, tspan {{white-space: pre;}}
             "Repository": lambda
                 value: f'<tspan class="value">{repos_owned} (<tspan class="key">Contributed</tspan>: {repos_contributed})</tspan> | <tspan class="value"><tspan class="key">Stars</tspan>: {stars}</tspan> | <tspan class="value"><tspan class="key">Followers</tspan>: {followers}</tspan>',
             "Commits": lambda
-                value: f'<tspan class="value">{data["total_commits"]:,}</tspan> | <tspan class="value"><tspan class="key">Lines</tspan>: {net_lines:,} ( <tspan class="addColor">{total_additions:,}++</tspan>,  <tspan class="delColor">{total_deletions:,}--</tspan> )</tspan>',
+                value: f'<tspan class="value">{data["total_commits"]:,}</tspan>',
             "Issues": lambda
                 value: f'<tspan class="value"><tspan class="key">Open</tspan>: <tspan class="green">{open_issues}</tspan></tspan> | <tspan class="value"><tspan class="key">Closed</tspan>: <tspan class="red">{closed_issues}</tspan></tspan>',
             "Pull Requests": lambda
@@ -1133,11 +1128,10 @@ text, tspan {{white-space: pre;}}
             for i, (lang, stats) in enumerate(list(language_percentages.items())[:10]):  # Show top 10 languages
                 percentage_str = f"{stats['percentage']:.1f}%"
                 commits_str = f"{stats['commits']:,} commits"
-                lines_str = f"(+{stats['additions']:,} -{stats['deletions']:,})"
 
                 svg_content += f'''
 <text x="{x_main}" y="{y_current}" fill="{text_color}" font-size="14px">
-<tspan x="{x_main}" y="{y_current}">  <tspan style="fill:{stats['color']}">●</tspan> <tspan class="key">{lang}</tspan>: <tspan class="value">{percentage_str}</tspan> <tspan class="value">{commits_str}</tspan> <tspan class="value">{lines_str}</tspan></tspan>
+<tspan x="{x_main}" y="{y_current}">  <tspan style="fill:{stats['color']}">●</tspan> <tspan class="key">{lang}</tspan>: <tspan class="value">{percentage_str}</tspan> <tspan class="value">{commits_str}</tspan></tspan>
 </text>'''
                 y_current += line_height
 
