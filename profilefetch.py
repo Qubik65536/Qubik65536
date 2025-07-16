@@ -518,6 +518,132 @@ class GitHubProfileGenerator:
 
         return False
 
+    def fetch_all_commits_for_repo(self, owner, repo_name, from_date, to_date):
+        """Fetch all commits for a specific repository using the REST API"""
+        print(f"  Fetching additional commit data for {owner}/{repo_name}...")
+
+        rest_api_url = f"https://api.github.com/repos/{owner}/{repo_name}/commits"
+        params = {
+            "author": self.username,
+            "since": from_date,
+            "until": to_date,
+            "per_page": 100
+        }
+
+        all_commits = []
+        page = 1
+
+        while True:
+            params["page"] = page
+            response = requests.get(rest_api_url, params=params, headers=self.headers)
+
+            if response.status_code == 200:
+                commits = response.json()
+                if not commits:
+                    break
+
+                all_commits.extend(commits)
+                page += 1
+
+                if len(commits) < 100:  # Last page
+                    break
+            else:
+                print(f"  ⚠ Failed to fetch commits for {owner}/{repo_name}: {response.status_code}")
+                break
+
+        return len(all_commits)
+
+    def get_user_repositories(self):
+        """Get a list of repositories that the user has contributed to"""
+        query = """
+        query($username: String!, $cursor: String) {
+            user(login: $username) {
+                repositories(first: 100, after: $cursor, orderBy: {field: PUSHED_AT, direction: DESC}) {
+                    pageInfo {
+                        hasNextPage
+                        endCursor
+                    }
+                    nodes {
+                        name
+                        owner {
+                            login
+                        }
+                        isPrivate
+                        isFork
+                        pushedAt
+                        primaryLanguage {
+                            name
+                            color
+                        }
+                    }
+                }
+                repositoriesContributedTo(first: 100, after: $cursor, orderBy: {field: PUSHED_AT, direction: DESC}) {
+                    pageInfo {
+                        hasNextPage
+                        endCursor
+                    }
+                    nodes {
+                        name
+                        owner {
+                            login
+                        }
+                        isPrivate
+                        isFork
+                        pushedAt
+                        primaryLanguage {
+                            name
+                            color
+                        }
+                    }
+                }
+            }
+        }
+        """
+
+        repositories = []
+        contributed_repos = []
+
+        # First, fetch owned repositories
+        has_next_page = True
+        cursor = None
+
+        while has_next_page:
+            response = requests.post(
+                self.graphql_url,
+                json={'query': query, 'variables': {'username': self.username, 'cursor': cursor}},
+                headers=self.headers
+            )
+
+            if response.status_code != 200:
+                print(f"⚠ Failed to fetch repositories: {response.status_code}")
+                break
+
+            data = response.json()
+            if 'errors' in data:
+                print(f"⚠ GraphQL errors fetching repositories: {data['errors']}")
+                break
+
+            user_data = data.get('data', {}).get('user', {})
+
+            # Process owned repositories
+            repos = user_data.get('repositories', {})
+            for repo in repos.get('nodes', []):
+                if repo:
+                    repositories.append(repo)
+
+            # Process contributed repositories
+            contrib_repos = user_data.get('repositoriesContributedTo', {})
+            for repo in contrib_repos.get('nodes', []):
+                if repo:
+                    contributed_repos.append(repo)
+
+            # Check pagination for owned repos
+            page_info = repos.get('pageInfo', {})
+            has_next_page = page_info.get('hasNextPage', False)
+            cursor = page_info.get('endCursor') if has_next_page else None
+
+        return repositories, contributed_repos
+
     def get_user_data_multi_year(self, years_back=None):
         """Fetch user data across multiple years including detailed issue and PR statistics with draft PRs"""
         end_date = datetime.now()
@@ -624,6 +750,30 @@ class GitHubProfileGenerator:
             'repos': {}  # Track commits per repo for each language
         })
 
+        # Fetch the user's repositories and contributed repositories
+        print("Fetching repositories the user has contributed to...")
+        owned_repos, contributed_repos = self.get_user_repositories()
+
+        # Combine all repositories for processing
+        all_repos = owned_repos + contributed_repos
+        print(f"✓ Found {len(owned_repos)} owned repositories and {len(contributed_repos)} contributed repositories")
+
+        # Map of repo full names to their primary language
+        repo_languages = {}
+        for repo in all_repos:
+            owner = repo.get('owner', {}).get('login', '')
+            name = repo.get('name', '')
+            full_name = f"{owner}/{name}"
+
+            primary_lang = repo.get('primaryLanguage', {})
+            if primary_lang and primary_lang.get('name'):
+                lang_name = primary_lang['name']
+                lang_color = primary_lang.get('color') or LANGUAGE_COLORS.get(lang_name, '#000000')
+                repo_languages[full_name] = {
+                    'name': lang_name,
+                    'color': lang_color
+                }
+
         # Fetch data year by year to avoid API limits
         current_year = end_date.year
         for year in range(current_year - years_back + 1, current_year + 1):
@@ -632,7 +782,7 @@ class GitHubProfileGenerator:
 
             print(f"Fetching contributions for {year}...")
 
-            # Fixed query with proper pagination
+            # First, get regular contributions via GraphQL
             contributions_query = """
             query($username: String!, $from: DateTime!, $to: DateTime!) {
                 user(login: $username) {
@@ -704,31 +854,34 @@ class GitHubProfileGenerator:
 
             year_data = user_contrib['contributionsCollection']
             contributions_data[year] = year_data
-            year_commits = year_data.get('totalCommitContributions', 0)
-            total_commits += year_commits
-            print(f"  ✓ {year}: {year_commits} commits")
+            year_commits_from_graphql = year_data.get('totalCommitContributions', 0)
 
-            # Process language statistics
+            # Process GraphQL language statistics
             commit_contribs = year_data.get('commitContributionsByRepository', [])
-            if not commit_contribs:
-                print(f"  No repository contributions found for {year}")
-                continue
+
+            # Track repositories with few commits that might need additional REST API fetching
+            small_repos = []
 
             for repo_contrib in commit_contribs:
                 if not repo_contrib or not repo_contrib.get('repository'):
                     continue
 
                 repo = repo_contrib['repository']
+                repo_owner = repo.get('owner', {}).get('login', '')
+                repo_name = repo.get('name', '')
+                repo_full_name = f"{repo_owner}/{repo_name}"
+
                 contributions = repo_contrib.get('contributions', {})
                 commit_count = contributions.get('totalCount', 0) if contributions else 0
+
+                # If repo has few commits, mark for additional fetching
+                if commit_count < 10:
+                    small_repos.append((repo_owner, repo_name))
 
                 if commit_count == 0:
                     continue
 
-                repo_name = f"{repo.get('owner', {}).get('login', '')}/{repo.get('name', '')}"
-
                 # Process all languages in repo (weighted by usage)
-                # FIX: Don't process primary language separately to avoid double-counting
                 languages = repo.get('languages', {})
                 if languages and languages.get('edges'):
                     total_size = sum(edge.get('size', 0) for edge in languages['edges'] if edge and edge.get('size'))
@@ -755,9 +908,9 @@ class GitHubProfileGenerator:
                                 language_stats[lang_name]['deletions'] += int(edge_size * 0.1)
 
                                 # Track commits per repo for this language
-                                if repo_name not in language_stats[lang_name]['repos']:
-                                    language_stats[lang_name]['repos'][repo_name] = 0
-                                language_stats[lang_name]['repos'][repo_name] += weighted_commits
+                                if repo_full_name not in language_stats[lang_name]['repos']:
+                                    language_stats[lang_name]['repos'][repo_full_name] = 0
+                                language_stats[lang_name]['repos'][repo_full_name] += weighted_commits
                     else:
                         # If no language data available, use primary language as fallback
                         primary_lang = repo.get('primaryLanguage')
@@ -768,9 +921,9 @@ class GitHubProfileGenerator:
                             language_stats[lang_name]['color'] = lang_color
 
                             # Track commits per repo for this language
-                            if repo_name not in language_stats[lang_name]['repos']:
-                                language_stats[lang_name]['repos'][repo_name] = 0
-                            language_stats[lang_name]['repos'][repo_name] += commit_count
+                            if repo_full_name not in language_stats[lang_name]['repos']:
+                                language_stats[lang_name]['repos'][repo_full_name] = 0
+                            language_stats[lang_name]['repos'][repo_full_name] += commit_count
                 else:
                     # If no languages data at all, fall back to primary language
                     primary_lang = repo.get('primaryLanguage')
@@ -781,13 +934,66 @@ class GitHubProfileGenerator:
                         language_stats[lang_name]['color'] = lang_color
 
                         # Track commits per repo for this language
-                        if repo_name not in language_stats[lang_name]['repos']:
-                            language_stats[lang_name]['repos'][repo_name] = 0
-                        language_stats[lang_name]['repos'][repo_name] += commit_count
+                        if repo_full_name not in language_stats[lang_name]['repos']:
+                            language_stats[lang_name]['repos'][repo_full_name] = 0
+                        language_stats[lang_name]['repos'][repo_full_name] += commit_count
 
-        # No need to find just the top repo - we'll keep all repos
-        # Instead of finding the top repo and then removing the repos dict,
-        # we'll just keep the repos dict intact
+            # Now fetch additional commit data using REST API for repos with few commits
+            year_commits_from_rest = 0
+
+            print(f"  Checking {len(small_repos)} repositories with few commits for additional data...")
+            for repo_owner, repo_name in small_repos:
+                # Get additional commits using REST API
+                additional_commits = self.fetch_all_commits_for_repo(
+                    repo_owner,
+                    repo_name,
+                    year_start,
+                    year_end
+                )
+
+                if additional_commits > 0:
+                    repo_full_name = f"{repo_owner}/{repo_name}"
+                    print(f"  ✓ Found {additional_commits} commits for {repo_full_name} via REST API")
+
+                    # Only count additional commits beyond what GraphQL already reported
+                    graphql_reported = 0
+                    for repo_contrib in commit_contribs:
+                        if not repo_contrib or not repo_contrib.get('repository'):
+                            continue
+
+                        repo = repo_contrib['repository']
+                        if (repo.get('owner', {}).get('login', '') == repo_owner and
+                                repo.get('name', '') == repo_name):
+                            contributions = repo_contrib.get('contributions', {})
+                            graphql_reported = contributions.get('totalCount', 0) if contributions else 0
+                            break
+
+                    if additional_commits > graphql_reported:
+                        extra_commits = additional_commits - graphql_reported
+                        year_commits_from_rest += extra_commits
+
+                        # Update language stats for these additional commits
+                        repo_lang = None
+                        if repo_full_name in repo_languages:
+                            repo_lang = repo_languages[repo_full_name]
+
+                        if repo_lang:
+                            lang_name = repo_lang['name']
+                            lang_color = repo_lang['color']
+                            language_stats[lang_name]['commits'] += extra_commits
+                            language_stats[lang_name]['color'] = lang_color
+
+                            # Track commits per repo
+                            if repo_full_name not in language_stats[lang_name]['repos']:
+                                language_stats[lang_name]['repos'][repo_full_name] = 0
+                            language_stats[lang_name]['repos'][repo_full_name] += extra_commits
+
+            # Total year commits = GraphQL reported + additional from REST API
+            year_commits = year_commits_from_graphql + year_commits_from_rest
+            total_commits += year_commits
+
+            print(
+                f"  ✓ {year}: {year_commits} total commits ({year_commits_from_graphql} from GraphQL, {year_commits_from_rest} additional from REST API)")
 
         print(f"✓ Total commits collected: {total_commits}")
         print(f"✓ Languages found: {len(language_stats)}")
