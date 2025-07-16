@@ -7,10 +7,11 @@ Generates neofetch-style profile SVGs with statistics fetched from GitHub GraphQ
 import argparse
 import os
 import re
+import time
 import unicodedata
 from collections import defaultdict
 from datetime import datetime, timezone
-
+import re
 import requests
 
 # SVG Configuration Constants
@@ -483,6 +484,89 @@ class GitHubProfileGenerator:
             'Content-Type': 'application/json',
         }
         self.graphql_url = 'https://api.github.com/graphql'
+        # Add rate limit tracking
+        self.requests_count = 0
+        self.rate_limit_remaining = 5000  # Default GitHub API rate limit
+
+    def fetch_paginated_results(self, url, params=None, max_pages=None):
+        """
+        Fetch all pages of results from a paginated GitHub API endpoint
+
+        Args:
+            url: The API endpoint URL
+            params: Query parameters
+            max_pages: Optional limit on number of pages to fetch
+
+        Returns:
+            List of all items across all pages
+        """
+        if params is None:
+            params = {}
+
+        if 'per_page' not in params:
+            params['per_page'] = 100  # Maximum items per page
+
+        all_results = []
+        page_count = 0
+
+        while url and (max_pages is None or page_count < max_pages):
+            page_count += 1
+
+            # Print progress indicator for large pagination operations
+            if page_count > 1 and page_count % 5 == 0:
+                print(f"    Fetching page {page_count}... (collected {len(all_results)} items so far)")
+
+            # Make the request
+            response = requests.get(url, params=params, headers=self.headers)
+            self.requests_count += 1
+
+            # Check for rate limit information
+            if 'X-RateLimit-Remaining' in response.headers:
+                self.rate_limit_remaining = int(response.headers['X-RateLimit-Remaining'])
+                if self.rate_limit_remaining < 100:
+                    print(f"⚠ Warning: GitHub API rate limit running low: {self.rate_limit_remaining} requests remaining")
+                    if self.rate_limit_remaining < 10:
+                        # Sleep to avoid hitting rate limit
+                        reset_time = int(response.headers.get('X-RateLimit-Reset', 0))
+                        current_time = int(time.time())
+                        sleep_time = max(reset_time - current_time + 5, 5)  # Add 5 seconds buffer
+                        print(f"⚠ Approaching rate limit. Waiting {sleep_time} seconds for reset...")
+                        time.sleep(sleep_time)
+
+            # Check for errors
+            if response.status_code != 200:
+                print(f"⚠ API request failed: {response.status_code} - {response.text}")
+                break
+
+            # Add results from this page
+            page_results = response.json()
+            if isinstance(page_results, list):
+                all_results.extend(page_results)
+            else:
+                # If not a list, it might be a single item or error response
+                all_results.append(page_results)
+                break  # No pagination for non-list responses
+
+            # Check for pagination in Link header
+            next_url = None
+            if 'Link' in response.headers:
+                links = response.headers['Link'].split(',')
+                for link in links:
+                    if 'rel="next"' in link:
+                        # Extract URL from the link
+                        match = re.search(r'<([^>]+)>', link)
+                        if match:
+                            next_url = match.group(1)
+                            # On subsequent pages, don't use the original params
+                            params = {}
+                            break
+
+            if not next_url:
+                break
+
+            url = next_url
+
+        return all_results
 
     def check_is_authenticated_user(self, username):
         """Check if the token's authenticated user matches the provided username"""
@@ -615,12 +699,19 @@ class GitHubProfileGenerator:
         # Get contribution data for multiple years
         contributions_data = {}
         total_commits = 0
+        graphql_total_commits = 0  # Track GraphQL reported commits separately
         language_stats = defaultdict(lambda: {
             'commits': 0,
             'additions': 0,
             'deletions': 0,
             'color': '#000000'
         })
+
+        # Dictionary to track processed repositories to avoid duplicates
+        processed_repos = {}
+
+        # Reset API request counter
+        self.requests_count = 0
 
         # Fetch data year by year to avoid API limits
         current_year = end_date.year
@@ -709,8 +800,8 @@ class GitHubProfileGenerator:
             year_data = user_contrib['contributionsCollection']
             contributions_data[year] = year_data
             year_commits = year_data.get('totalCommitContributions', 0)
-            total_commits += year_commits
-            print(f"  ✓ {year}: {year_commits} commits")
+            graphql_total_commits += year_commits
+            print(f"  ✓ {year}: {year_commits} commits (GraphQL)")
 
             # Process language statistics and fetch commit changes
             commit_contribs = year_data.get('commitContributionsByRepository', [])
@@ -727,10 +818,16 @@ class GitHubProfileGenerator:
                 repo_owner = repo.get('owner', {}).get('login', '')
                 default_branch = repo.get('defaultBranchRef', {}).get('name', 'main')  # Fallback to 'main'
 
-                contributions = repo_contrib.get('contributions', {})
-                commit_count = contributions.get('totalCount', 0) if contributions else 0
+                # Skip if already processed this repo for this year
+                repo_key = f"{repo_owner}/{repo_name}/{year}"
+                if repo_key in processed_repos:
+                    continue
+                processed_repos[repo_key] = True
 
-                if commit_count == 0:
+                contributions = repo_contrib.get('contributions', {})
+                graphql_commit_count = contributions.get('totalCount', 0) if contributions else 0
+
+                if graphql_commit_count == 0:
                     continue
 
                 # Get primary language
@@ -738,17 +835,19 @@ class GitHubProfileGenerator:
                 if primary_lang and primary_lang.get('name'):
                     lang_name = primary_lang['name']
                     lang_color = primary_lang.get('color') or LANGUAGE_COLORS.get(lang_name, '#000000')
-                    language_stats[lang_name]['commits'] += commit_count
                     language_stats[lang_name]['color'] = lang_color
 
                 # Process all languages in repo
                 languages = repo.get('languages', {})
+                lang_edges = []
                 if languages and languages.get('edges'):
-                    total_size = sum(edge.get('size', 0) for edge in languages['edges'] if edge and edge.get('size'))
+                    lang_edges = languages['edges']
+                    total_size = sum(edge.get('size', 0) for edge in lang_edges if edge and edge.get('size'))
 
-                    # Fetch commit changes for this repository
+                    # Fetch commit changes and accurate commit count using REST API
                     additions = 0
                     deletions = 0
+                    rest_commit_count = 0
 
                     # Since GitHub GraphQL API doesn't directly provide line changes,
                     # we'll use a REST API approach to get them
@@ -763,18 +862,30 @@ class GitHubProfileGenerator:
                         }
 
                         try:
-                            # First get list of commits
-                            commits_response = requests.get(
-                                rest_url,
-                                params=params,
-                                headers=self.headers
-                            )
+                            # Use pagination to get all commits, not just the first 100
+                            print(f"  Fetching commits for {repo_owner}/{repo_name}...")
+                            commits = self.fetch_paginated_results(rest_url, params)
+                            rest_commit_count = len(commits)
 
-                            if commits_response.status_code == 200:
-                                commits = commits_response.json()
+                            if rest_commit_count > 100:
+                                print(f"  Found {rest_commit_count} commits using pagination (would have missed {rest_commit_count - 100} commits without pagination)")
 
-                                # Process each commit to get stats
-                                for commit in commits:
+                            # If REST API returns more commits than GraphQL, update our count
+                            commit_diff = rest_commit_count - graphql_commit_count
+                            if commit_diff > 0:
+                                print(f"  Found {commit_diff} additional commits in {repo_owner}/{repo_name} using REST API")
+                                total_commits += commit_diff
+
+                            # Always add the GraphQL commits to maintain consistency with other metrics
+                            total_commits += graphql_commit_count
+
+                            # Process each commit to get stats, using pagination when needed
+                            print(f"  Processing {rest_commit_count} commits for stats...")
+                            # Since we need details for each commit, batch them to avoid too many API calls
+                            batch_size = 20  # Process commits in batches
+                            for i in range(0, len(commits), batch_size):
+                                batch = commits[i:i+batch_size]
+                                for commit in batch:
                                     sha = commit.get('sha')
                                     if sha:
                                         # Get detailed commit info including stats
@@ -783,20 +894,59 @@ class GitHubProfileGenerator:
                                             commit_detail_url,
                                             headers=self.headers
                                         )
+                                        self.requests_count += 1
 
                                         if commit_response.status_code == 200:
                                             commit_data = commit_response.json()
                                             stats = commit_data.get('stats', {})
                                             additions += stats.get('additions', 0)
                                             deletions += stats.get('deletions', 0)
+                                        elif commit_response.status_code == 403 and 'rate limit' in commit_response.text.lower():
+                                            # Handle rate limiting by sleeping
+                                            reset_time = int(commit_response.headers.get('X-RateLimit-Reset', 0))
+                                            current_time = int(time.time())
+                                            sleep_time = max(reset_time - current_time + 5, 5)
+                                            print(f"  ⚠ Rate limit reached. Waiting {sleep_time} seconds for reset...")
+                                            time.sleep(sleep_time)
 
-                            print(f"  Repo {repo_owner}/{repo_name}: +{additions} -{deletions}")
+                                            # Retry this commit
+                                            commit_response = requests.get(
+                                                commit_detail_url,
+                                                headers=self.headers
+                                            )
+                                            self.requests_count += 1
+
+                                            if commit_response.status_code == 200:
+                                                commit_data = commit_response.json()
+                                                stats = commit_data.get('stats', {})
+                                                additions += stats.get('additions', 0)
+                                                deletions += stats.get('deletions', 0)
+
+                                # Print progress for large repos
+                                if rest_commit_count > batch_size and i + batch_size < len(commits):
+                                    print(f"    Processed {i + batch_size}/{rest_commit_count} commits...")
+
+                                # Check if we need to pause to avoid rate limiting
+                                if self.rate_limit_remaining < 50 and i + batch_size < len(commits):
+                                    print(f"  ⚠ Approaching rate limit ({self.rate_limit_remaining} left). Pausing for 60 seconds...")
+                                    time.sleep(60)  # Short pause to allow rate limit to recover
+
+                            print(f"  Repo {repo_owner}/{repo_name}: {rest_commit_count} commits, +{additions} -{deletions}")
                         except Exception as e:
+                            # On error, use GraphQL count
+                            total_commits += graphql_commit_count
                             print(f"  Error fetching commit stats for {repo_owner}/{repo_name}: {str(e)}")
+                            print(f"  Using GraphQL count: {graphql_commit_count}")
+                    else:
+                        # If we can't use REST API, use GraphQL count
+                        total_commits += graphql_commit_count
+
+                    # Use REST API commit count if available, otherwise use GraphQL
+                    actual_commit_count = rest_commit_count if rest_commit_count > 0 else graphql_commit_count
 
                     # Distribute additions/deletions by language proportion
                     if total_size > 0:
-                        for edge in languages['edges']:
+                        for edge in lang_edges:
                             if not edge or not edge.get('node'):
                                 continue
 
@@ -808,7 +958,7 @@ class GitHubProfileGenerator:
                             lang_color = node.get('color') or LANGUAGE_COLORS.get(lang_name, '#000000')
                             edge_size = edge.get('size', 0)
                             lang_proportion = edge_size / total_size
-                            weighted_commits = int(commit_count * lang_proportion)
+                            weighted_commits = int(actual_commit_count * lang_proportion)
 
                             if weighted_commits > 0:
                                 language_stats[lang_name]['commits'] += weighted_commits
@@ -824,15 +974,22 @@ class GitHubProfileGenerator:
                                         edge_size * 0.6)  # More realistic ratio
                                     language_stats[lang_name]['deletions'] += int(edge_size * 0.2)
 
+        # If REST API didn't return any additional commits, ensure we're using the GraphQL total
+        if total_commits == 0:
+            total_commits = graphql_total_commits
+            print("⚠ No additional commits found via REST API, using GraphQL total")
+
         # Calculate total additions and deletions
         total_additions = sum(lang['additions'] for lang in language_stats.values())
         total_deletions = sum(lang['deletions'] for lang in language_stats.values())
 
-        print(f"✓ Total commits collected: {total_commits}")
+        print(f"✓ GraphQL commits: {graphql_total_commits}")
+        print(f"✓ Total commits collected (with REST API validation): {total_commits}")
         print(f"✓ Languages found: {len(language_stats)}")
         print(f"✓ Draft PRs found: {draft_prs}")
         print(f"✓ Total additions: {total_additions:,}")
         print(f"✓ Total deletions: {total_deletions:,}")
+        print(f"✓ Total API requests made: {self.requests_count}")
 
         return {
             'user': user_data,
@@ -1226,6 +1383,9 @@ text, tspan {{white-space: pre;}}
 
 
 def main():
+    # Start timing execution
+    start_time = time.time()
+
     parser = argparse.ArgumentParser(description='Generate GitHub profile SVGs with language statistics')
     parser.add_argument('--token', help='GitHub Personal Access Token (defaults to GITHUB_TOKEN env var)')
     parser.add_argument('--username', help='GitHub Username (defaults to GITHUB_USERNAME env var)')
@@ -1295,10 +1455,32 @@ def main():
         if args.debug:
             import traceback
             traceback.print_exc()
+
+        # Display execution time even if there was an error
+        end_time = time.time()
+        execution_time = end_time - start_time
+        print(f"\nExecution completed with errors in {execution_time:.2f} seconds.")
         return 1
 
-    return 0
+    # Calculate and display execution time
+    end_time = time.time()
+    execution_time = end_time - start_time
 
+    # Format the time based on duration
+    if execution_time < 60:
+        time_str = f"{execution_time:.2f} seconds"
+    elif execution_time < 3600:
+        minutes = int(execution_time // 60)
+        seconds = execution_time % 60
+        time_str = f"{minutes} minute{'s' if minutes != 1 else ''} and {seconds:.2f} seconds"
+    else:
+        hours = int(execution_time // 3600)
+        minutes = int((execution_time % 3600) // 60)
+        seconds = execution_time % 60
+        time_str = f"{hours} hour{'s' if hours != 1 else ''}, {minutes} minute{'s' if minutes != 1 else ''}, and {seconds:.2f} seconds"
+
+    print(f"\nExecution completed in {time_str}.")
+    return 0
 
 if __name__ == '__main__':
     exit(main())
