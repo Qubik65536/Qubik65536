@@ -126,7 +126,7 @@ def get_profile_content_definition(user_data):
     # System info section
     content_lines.extend([
         ("Uptime", f"{years} years, {months} months, {days} days"),
-        ("OS", "macOS 26 Tahoe, Windows 11, Fedora 42"),
+        ("OS", "macOS 26 Tahoe, Windows 11, Rocky Linux 10 KDE"),
         ("Editors", "NeoVim, Visual Studio Code"),
         ("IDE", "Xcode, IntelliJ IDEA"),
     ])
