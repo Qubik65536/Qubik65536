@@ -136,7 +136,7 @@ def get_profile_content_definition(user_data):
 
     # Languages section
     content_lines.extend([
-        ("Languages.Programming", "Kotlin, Java, Python, Rust, Shell"),
+        ("Languages.Programming", "Java, Python, C, Shell, Kotlin, Rust, Swift"),
         ("Languages.Markup", "HTML, CSS, Markdown, Typst, LaTeX"),
         ("Languages.Real", "Chinese, English, French"),
     ])
