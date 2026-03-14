@@ -36,7 +36,8 @@ Thanks to [@JohnsonRan](https://github.com/JohnsonRan) for providing me network 
 ### Sponsors
 
 > - [@mjsagert](https://github.com/mjsagert)
-> - 3Onion@buymeacoffee
+> - WillsCheE@buymeacoffee
+> - [@dataflake](https://github.com/dataflake)
 
 You can also sponsor me on [`GitHub`](https://github.com/sponsors/Qubik65536) or [`Buy Me a Coffee`](https://coff.ee/qubik65536) so that your name will be also on the list!
 
