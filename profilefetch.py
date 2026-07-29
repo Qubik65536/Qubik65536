@@ -136,7 +136,7 @@ def get_profile_content_definition(user_data):
 
     # Languages section
     content_lines.extend([
-        ("Languages.Programming", "Java, Python, C, Shell, Kotlin, Rust, Swift"),
+        ("Languages.Programming", "Java, Kotlin, Python, Rust, C, C++, Shell, Swift"),
         ("Languages.Markup", "HTML, CSS, Markdown, Typst, LaTeX"),
         ("Languages.Real", "Chinese, English, French"),
     ])
@@ -1370,7 +1370,7 @@ text, tspan {{white-space: pre;}}
         svg_content += f'''
 <text x="{ascii_x}" y="{y_current}" fill="{text_color}" class="prompt">
 <tspan x="{ascii_x}" y="{y_current}" class="prompt">{prompt_text} </tspan><tspan class="cursor blinking">█</tspan>
-</text>'''
+</text>''' 
 
         svg_content += '\n</svg>'
 
